@@ -1,6 +1,8 @@
-﻿// Learn more about F# at http://fsharp.org
+﻿module Roman.Roman
 
 open System
+
+let convert roman = 1
 
 [<EntryPoint>]
 let main argv =
