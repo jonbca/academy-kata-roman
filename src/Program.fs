@@ -26,5 +26,7 @@ let convertRoman (roman: string) =
 
 [<EntryPoint>]
 let main argv =
-  printfn "Hello World from F#!"
+  match argv with
+  | [| roman |] -> printfn "%d" (convertRoman roman)
+  | _ -> failwith "usage: dotnet run mcmlxxxiv"
   0 // return an integer exit code
