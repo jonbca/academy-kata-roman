@@ -1,20 +1,30 @@
 ﻿module Roman.Roman
 
-open System
+open System.Text.RegularExpressions
+
+let romanDigitMapping =
+  Map.ofSeq [| "I", 1
+               "V", 5
+               "X", 10
+               "L", 50
+               "C", 100
+               "D", 500
+               "M", 1000 |]
 
 let convertDigit (roman: char) =
-  match roman.ToString().ToUpper() with
-  | "I" -> 1
-  | "V" -> 5
-  | "X" -> 10
-  | "L" -> 50
-  | "C" -> 100
-  | "D" -> 500
-  | "M" -> 1000
-  | _ -> invalidArg "roman" "not a roman digit"
+  romanDigitMapping.[roman.ToString().ToUpper()]
 
-let convertRoman (roman: string) =
-  let numbers = List.map convertDigit (List.ofSeq roman)
+let (|ValidRomanNumber|_|) (romanString: string) =
+  let m =
+    Regex("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$").Match(romanString.ToUpper())
+
+  if m.Success then Some romanString else None
+
+let convertRoman roman =
+  let numbers =
+    match roman with
+    | ValidRomanNumber roman -> roman |> List.ofSeq |> List.map convertDigit
+    | _ -> invalidArg "roman" "not a roman number"
 
   let rec arabify n xs =
     match xs with

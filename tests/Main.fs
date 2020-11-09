@@ -106,11 +106,22 @@ let tests = testList "roman numerals" [
       Expect.equal result 900 "convert cm to 900"
     }
 
-
     test "convert mcmxcix" {
       let subject = "mcmxcix"
       let result = Roman.Roman.convertRoman subject
       Expect.equal result 1999 "convert mcmxcix to 1999"
+    }
+  ]
+
+  testList "bad roman numbers" [
+    test "try converting abcd" {
+      let subject = "abcd"
+      Expect.throws (fun _ -> Roman.Roman.convertRoman(subject) |> ignore) "abcd is not a roman numeral"
+    }
+
+    test "try converting ICXXXXIIVV" {
+      let subject = "ICXXXXIIVV"
+      Expect.throws (fun _ -> Roman.Roman.convertRoman(subject) |> ignore) "ICXXXXIIVV is not a roman numeral"
     }
   ]
 ]
