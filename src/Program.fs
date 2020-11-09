@@ -18,7 +18,8 @@ let convertRoman (roman: string) =
 
   let rec arabify n xs =
     match xs with
-    | fst :: sec :: tail -> if (sec > fst) then (arabify (n + sec - fst) tail) else (arabify (n + fst) (sec :: tail))
+    | fst :: sec :: tail when sec > fst -> arabify (n + sec - fst) tail
+    | fst :: sec :: tail -> arabify (n + fst) (sec :: tail)
     | fst :: tail -> arabify (n + fst) tail
     | [] -> n
 
