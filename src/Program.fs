@@ -2,17 +2,16 @@
 
 open System.Text.RegularExpressions
 
-let romanDigitMapping =
-  Map.ofSeq [| "I", 1
-               "V", 5
-               "X", 10
-               "L", 50
-               "C", 100
-               "D", 500
-               "M", 1000 |]
-
-let convertDigit (roman: char) =
-  romanDigitMapping.[roman.ToString().ToUpper()]
+let convertDigit roman =
+  match roman.ToString().ToUpper() with
+  | "I" -> 1
+  | "V" -> 5
+  | "X" -> 10
+  | "L" -> 50
+  | "C" -> 100
+  | "D" -> 500
+  | "M" -> 1000
+  | _ -> invalidArg "roman" "not a roman numeral"
 
 let (|ValidRomanNumber|_|) (romanString: string) =
   let m =
